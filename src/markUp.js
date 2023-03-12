@@ -1,47 +1,50 @@
-const listEl = document.querySelector('.country-list');
-const countryEl = document.querySelector('.country-info');
+const galleryEl = document.querySelector('.gallery');
+const loadMoreBtnEl = document.querySelector('.load-more');
 
+export function listMarkUp(obj) {
+  loadMoreBtnEl.classList.add('is-hidden');
+  galleryEl.innerHTML = '';
+  const images = obj.hits;
+  const markUpData = images
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) =>
+        `<div class="photo-card">
+            <img src=${webformatURL} alt="${tags}" loading="lazy" width="480"/>
+            <div class="info">
+                <p class="info-item">
+                    <b>Likes</b><br>${likes}                   
+                </p>
+                <p class="info-item">
+                    <b>Views</b><br>${views}                 
+                </p>
+                <p class="info-item">
+                    <b>Comments</b><br>${comments}
+                </p>
+                <p class="info-item">
+                    <b>Downloads</b><br>${downloads}
+                </p>
+            </div>
+        </div>`
+    )
+    .join('');
 
-
-
-
-
-
-
-
-
-
-
-// export function listMarkUp(countries) {
-//   countryEl.innerHTML = '';
-//   const markUpData = countries
-//     .map(
-//       ({ flags: { svg }, name }) =>
-//         `<li><img src=${svg} alt="flag of ${name}" width="70">
-//           <span style="font-weight: medium;font-size: 25px;"> ${name}</span></li>`
-//     )
-//     .join('');
-
-//   listEl.innerHTML = markUpData;
-// }
-// export function countryMarkUp({
-//   name,
-//   capital,
-//   population,
-//   flags: { svg },
-//   languages,
-// }) {
-//   listEl.innerHTML = '';
-//   const countryLanguages = languages.map(el => el.name).join(', ');
-//   const markUpData = `<h1 style="font-size:45px;">
-//   <img src=${svg} alt="flag of ${name}" width="70"> ${name}</h1>
-//   <li><span style="font-weight: bold;font-size: 25px;">Capital: </span><span style="font-size: 25px;">${capital}</span></li>
-//   <li><span style="font-weight: bold;font-size: 25px;">Population: </span><span style="font-size: 25px;">${population}</span></li>
-//   <li><span style="font-weight: bold;font-size: 25px;">Languages: </span><span style="font-size: 25px;">${countryLanguages}</span></li>`;
-
-//   countryEl.innerHTML = markUpData;
-// }
+  galleryEl.insertAdjacentHTML('afterbegin', markUpData);
+  btnTimeOut();
+}
 // export function clearAllMarkUp() {
 //   countryEl.innerHTML = '';
 //   listEl.innerHTML = '';
 // }
+const btnTimeOut = () => {
+  setTimeout(() => {
+    loadMoreBtnEl.classList.remove('is-hidden');
+  }, 1200);
+};

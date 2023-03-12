@@ -1,12 +1,12 @@
 import './css/styles.css';
-// import {  } from './markUp';
+import { listMarkUp } from './markUp';
 import { fetchImages } from './fetchImages';
 // import debounce from 'lodash.debounce';
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 Notify.init({
   fontSize: '20px',
-  width: '400px',
+  width: '450px',
   position: 'right-top',
 });
 
@@ -17,11 +17,25 @@ formEl.addEventListener('submit', submitInputData);
 function submitInputData(e) {
   e.preventDefault();
   const input = formEl[0].value.trim();
-  console.log(input);
+  if (input !== '') {
+    fetchImages(input)
+      .then(data => {
+        dataReceive(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  return;
 }
 
-// {webformatURl, largeImageURL, tags, likes, views, comments, downloads}
-// 'Sorry, there are no images matching your search query. Please try again.';
+function dataReceive(obj) {
+  if (obj.totalHits === 0) {
+    Notify.failure(
+      '❌ Sorry, there are no images matching your search query. Please try again.'
+    );
+  } else listMarkUp(obj);
+}
 
 // const DEBOUNCE_DELAY = 300;
 // const inputEl = document.querySelector('#search-box');
@@ -42,11 +56,4 @@ function submitInputData(e) {
 //       Notify.failure('❌ Oops, there is no country with that name');
 //       clearAllMarkUp();
 //     });
-// }
-// function dataReceive(obj) {
-//   if (obj.length > 10) {
-//     Notify.info('Too many matches found. Please enter a more specific name.');
-//   } else if (2 <= obj.length && obj.length <= 10) {
-//     listMarkUp(obj);
-//   } else countryMarkUp(obj[0]);
 // }
