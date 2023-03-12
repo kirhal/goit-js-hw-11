@@ -1,5 +1,5 @@
 export function listMarkUp(obj) {
-  const images = obj.hits;
+  const images = obj.data.hits;
   return images
     .map(
       ({

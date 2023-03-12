@@ -1,7 +1,6 @@
 import './css/styles.css';
 import { listMarkUp } from './markUp';
 import { fetchImages, fetchMoreImages } from './fetchImages';
-import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 Notify.init({
   fontSize: '20px',
@@ -26,6 +25,7 @@ function submitInputData(e) {
     localStorage.setItem('search-word', input);
     fetchImages(input)
       .then(data => {
+        console.log(data);
         renderingData(data);
       })
       .catch(error => {
@@ -35,12 +35,12 @@ function submitInputData(e) {
 }
 
 function renderingData(obj) {
-  if (obj.totalHits === 0) {
+  if (obj.data.totalHits === 0) {
     Notify.failure(
       '❌ Sorry, there are no images matching your search query. Please try again.'
     );
   } else {
-    Notify.success(`Hooray! We found ${obj.totalHits} images.`);
+    Notify.success(`Hooray! We found ${obj.data.totalHits} images.`);
     galleryEl.innerHTML = '';
     loadMoreBtnEl.classList.add('is-hidden');
     const markUpData = listMarkUp(obj);
@@ -53,7 +53,6 @@ function loadMoreData() {
   const localValue = localStorage.getItem('search-word');
   fetchMoreImages(localValue)
     .then(data => {
-      console.log(data);
       moreRenderingData(data);
     })
     .catch(error => {
@@ -62,13 +61,12 @@ function loadMoreData() {
 }
 
 function moreRenderingData(obj) {
-  if (obj.totalHits === 0) {
-    Notify.failure(
-      '❌ Sorry, there are no images matching your search query. Please try again.'
-    );
-  } else {
-    const markUpData = listMarkUp(obj);
-    galleryEl.insertAdjacentHTML('beforeend', markUpData);
+  const markUpData = listMarkUp(obj);
+  galleryEl.insertAdjacentHTML('beforeend', markUpData);
+  const galleryLength = galleryEl.children.length;
+  if (obj.data.totalHits - galleryLength === 0) {
+    Notify.info(`We're sorry, but you've reached the end of search results.`);
+    loadMoreBtnEl.classList.add('is-hidden');
   }
 }
 // const loadBtnTimeOut = () => {
