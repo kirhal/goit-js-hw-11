@@ -1,8 +1,6 @@
 const galleryEl = document.querySelector('.gallery');
-const loadMoreBtnEl = document.querySelector('.load-more');
 
 export function listMarkUp(obj) {
-  loadMoreBtnEl.classList.add('is-hidden');
   galleryEl.innerHTML = '';
   const images = obj.hits;
   const markUpData = images
@@ -37,14 +35,4 @@ export function listMarkUp(obj) {
     .join('');
 
   galleryEl.insertAdjacentHTML('afterbegin', markUpData);
-  btnTimeOut();
 }
-// export function clearAllMarkUp() {
-//   countryEl.innerHTML = '';
-//   listEl.innerHTML = '';
-// }
-const btnTimeOut = () => {
-  setTimeout(() => {
-    loadMoreBtnEl.classList.remove('is-hidden');
-  }, 1200);
-};

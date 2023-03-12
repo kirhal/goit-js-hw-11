@@ -11,8 +11,10 @@ Notify.init({
 });
 
 const formEl = document.querySelector('#search-form');
+const loadMoreBtnEl = document.querySelector('.load-more');
 
 formEl.addEventListener('submit', submitInputData);
+loadMoreBtnEl.addEventListener('click', submitInputData);
 
 function submitInputData(e) {
   e.preventDefault();
@@ -34,9 +36,17 @@ function dataReceive(obj) {
     Notify.failure(
       '❌ Sorry, there are no images matching your search query. Please try again.'
     );
-  } else listMarkUp(obj);
+  } else {
+    loadMoreBtnEl.classList.add('is-hidden');
+    listMarkUp(obj);
+    loadBtnTimeOut();
+  }
 }
-
+const loadBtnTimeOut = () => {
+  setTimeout(() => {
+    loadMoreBtnEl.classList.remove('is-hidden');
+  }, 800);
+};
 // const DEBOUNCE_DELAY = 300;
 // const inputEl = document.querySelector('#search-box');
 
