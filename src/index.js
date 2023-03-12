@@ -40,10 +40,12 @@ function renderingData(obj) {
       '❌ Sorry, there are no images matching your search query. Please try again.'
     );
   } else {
+    Notify.success(`Hooray! We found ${obj.totalHits} images.`);
     galleryEl.innerHTML = '';
     loadMoreBtnEl.classList.add('is-hidden');
     const markUpData = listMarkUp(obj);
     galleryEl.insertAdjacentHTML('afterbegin', markUpData);
+    loadMoreBtnEl.classList.remove('is-hidden');
   }
 }
 
@@ -51,6 +53,7 @@ function loadMoreData() {
   const localValue = localStorage.getItem('search-word');
   fetchMoreImages(localValue)
     .then(data => {
+      console.log(data);
       moreRenderingData(data);
     })
     .catch(error => {
