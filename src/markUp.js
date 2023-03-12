@@ -1,9 +1,6 @@
-const galleryEl = document.querySelector('.gallery');
-
 export function listMarkUp(obj) {
-  galleryEl.innerHTML = '';
   const images = obj.hits;
-  const markUpData = images
+  return images
     .map(
       ({
         webformatURL,
@@ -33,6 +30,4 @@ export function listMarkUp(obj) {
         </div>`
     )
     .join('');
-
-  galleryEl.insertAdjacentHTML('afterbegin', markUpData);
 }
