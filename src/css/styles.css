@@ -48,14 +48,13 @@ button {
   outline: none;
   box-shadow: 0 10px 10px -5px black;
 }
-button:hover,
-button:focus {
+button:hover {
   border: 2px solid black;
   outline: none;
   color: rgb(0, 140, 255);
 }
 img {
-  width: 520px;
+  display: block;
   object-fit: cover;
 }
 .gallery {
@@ -68,9 +67,11 @@ img {
 }
 .info {
   display: flex;
+  align-items: center;
   justify-content: space-evenly;
   font-size: large;
   text-align: center;
+  margin: 0;
 }
 
 .photo-card {
@@ -88,8 +89,7 @@ img {
   font-size: 27px;
   font-weight: 700;
 }
-.load-more:hover,
-.load-more:focus {
+.load-more:hover {
   border: 2px solid black;
   outline: none;
   color: black;
