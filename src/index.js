@@ -25,7 +25,6 @@ function submitInputData(e) {
     localStorage.setItem('search-word', input);
     fetchImages(input)
       .then(data => {
-        console.log(data);
         renderingData(data);
       })
       .catch(error => {
@@ -39,13 +38,15 @@ function renderingData(obj) {
     Notify.failure(
       '❌ Sorry, there are no images matching your search query. Please try again.'
     );
+    galleryEl.innerHTML = '';
+    hideBtn();
   } else {
     Notify.success(`Hooray! We found ${obj.data.totalHits} images.`);
     galleryEl.innerHTML = '';
-    loadMoreBtnEl.classList.add('is-hidden');
+    hideBtn();
     const markUpData = listMarkUp(obj);
     galleryEl.insertAdjacentHTML('afterbegin', markUpData);
-    loadMoreBtnEl.classList.remove('is-hidden');
+    showBtn();
   }
 }
 
@@ -66,11 +67,12 @@ function moreRenderingData(obj) {
   const galleryLength = galleryEl.children.length;
   if (obj.data.totalHits - galleryLength === 0) {
     Notify.info(`We're sorry, but you've reached the end of search results.`);
-    loadMoreBtnEl.classList.add('is-hidden');
+    hideBtn();
   }
 }
-// const loadBtnTimeOut = () => {
-//   setTimeout(() => {
-//     loadMoreBtnEl.classList.remove('is-hidden');
-//   }, 800);
-// };
+const hideBtn = () => {
+  loadMoreBtnEl.classList.add('is-hidden');
+};
+const showBtn = () => {
+  loadMoreBtnEl.classList.remove('is-hidden');
+};
