@@ -1,6 +1,8 @@
 import './css/styles.css';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { listMarkUp } from './markUp';
 import { fetchImages, fetchMoreImages } from './fetchImages';
+import SimpleLightbox from 'simplelightbox';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 Notify.init({
   fontSize: '20px',
@@ -26,6 +28,7 @@ function submitInputData(e) {
     fetchImages(input)
       .then(data => {
         renderingData(data);
+        simpleLightBoxOn();
       })
       .catch(error => {
         console.log(error);
@@ -55,6 +58,7 @@ function loadMoreData() {
   fetchMoreImages(localValue)
     .then(data => {
       moreRenderingData(data);
+      simpleLightBoxOn();
     })
     .catch(error => {
       console.log(error);
@@ -76,3 +80,11 @@ const hideBtn = () => {
 const showBtn = () => {
   loadMoreBtnEl.classList.remove('is-hidden');
 };
+
+function simpleLightBoxOn() {
+  let gallery = new SimpleLightbox('.gallery a', {
+    scrollZoom: false,
+    docClose: false,
+  });
+  gallery.refresh('show.simplelightbox');
+}

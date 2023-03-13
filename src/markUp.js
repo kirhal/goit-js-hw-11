@@ -12,7 +12,9 @@ export function listMarkUp(obj) {
         downloads,
       }) =>
         `<div class="photo-card">
-            <img src=${webformatURL} alt="${tags}" loading="lazy" width="520" height="350"/>
+            <a href="${largeImageURL}">
+                <img src=${webformatURL} alt="${tags}" loading="lazy" width="520" height="350"/>
+            </a>
             <div class="info">
                 <p class="info-item">
                     <b>Likes</b><br>${likes}                   
@@ -23,11 +25,12 @@ export function listMarkUp(obj) {
                 <p class="info-item">
                     <b>Comments</b><br>${comments}
                 </p>
-                <p class="info-item">
+                 <p class="info-item">
                     <b>Downloads</b><br>${downloads}
                 </p>
             </div>
-        </div>`
+         </div>
+        `
     )
     .join('');
 }
